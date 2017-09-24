@@ -123,5 +123,15 @@ public class QuoteController {
         return ResponseEntity.ok("Tag removed");
     }
 
+    @ApiOperation(value = "Get a random quotation", response = Quote.class)
+    @RequestMapping(method = RequestMethod.GET, value = "/random")
+    public Quote getRandomQuote(Model model){
+        Quote quote = quoteService.getRandomQuote();
+        if(quote == null){
+            throw new ResourceNotFoundException();
+        }
+        return quote;
+    }
+
 
 }

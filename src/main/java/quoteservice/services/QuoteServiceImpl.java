@@ -78,4 +78,9 @@ public class QuoteServiceImpl implements QuoteService{
         return quote;
     }
 
+    @Override
+    public Quote getRandomQuote() {
+        logger.debug("getRandomQuote invoked");
+        return quoteRepository.getRandomQuote();
+    }
 }

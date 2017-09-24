@@ -5,5 +5,6 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import quoteservice.domain.Quote;
 
 @RepositoryRestResource
-public interface QuoteRepository extends CrudRepository<Quote, Integer> {
+public interface QuoteRepository extends CrudRepository<Quote, Integer>, QuoteRepositoryCustom {
+
 }

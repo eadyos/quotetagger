@@ -79,6 +79,14 @@ public class QuoteControllerTest {
         this.tagRepository.deleteAll();
 
         this.quote = quoteRepository.save(new Quote("Test Quote", "Tester"));
+        quoteRepository.save(new Quote("Test Quote2", "Tester"));
+        quoteRepository.save(new Quote("Test Quote3", "Tester"));
+        quoteRepository.save(new Quote("Test Quote4", "Tester"));
+        quoteRepository.save(new Quote("Test Quote5", "Tester"));
+        quoteRepository.save(new Quote("Test Quote6", "Tester"));
+        quoteRepository.save(new Quote("Test Quote7", "Tester"));
+
+
         this.tags.add(tagRepository.save(new Tag("TestTag1", "TestDescription1")));
         this.tags.add(tagRepository.save(new Tag("TestTag2", "TestDescription2")));
         unassociatedTag = tagRepository.save(new Tag("TestTag3", "TestDescription3"));
@@ -177,6 +185,14 @@ public class QuoteControllerTest {
                 .andExpect(status().isOk());
         Quote q = quoteRepository.findOne(quote.getId());
         assertTrue(q.getTags().size() == 1);
+    }
+
+    @Test
+    public void getRandomQuote() throws Exception {
+        mockMvc.perform(get("/quotes/random"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(contentType))
+                .andExpect(jsonPath("$", hasSize(1)));
     }
 
     protected String json(Object o) throws IOException {

@@ -16,4 +16,6 @@ public interface QuoteService {
 
     Quote removeTagFromQuote(Integer quoteId, Integer tagId);
 
+    Quote getRandomQuote();
+
 }
