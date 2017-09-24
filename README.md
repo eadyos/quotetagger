@@ -17,6 +17,6 @@ To run with gradle, clone the project and then run:
 
 ## Swagger
 
-Documentation for the web-service was built with (Swagger)[https://swagger.io]
+Documentation for the web-service was built with [Swagger](https://swagger.io)
 
 When run locally, it can be viewed at http://localhost:8080/swagger-ui.html
