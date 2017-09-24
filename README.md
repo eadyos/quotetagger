@@ -1,6 +1,10 @@
 # QuoteTagger
 Spring Boot rest api for storing/retrieving famous quotes and tagging them with labels
 
+The service is online and [available for demo here](https://afternoon-bayou-23485.herokuapp.com/swagger-ui.html)
+
+I am currently working on a front-end application to use the api as part of a new project.  It should get published soon.
+
 Functionality includes:
 
 1) CRUD operations on Quotes and Tags
