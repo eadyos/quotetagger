@@ -4,6 +4,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -16,6 +17,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping(value = "/quotes")
+@CrossOrigin
 @Api(value="quote service", description = "Operations for storing and updating quotations.")
 public class QuoteController {
 
@@ -40,7 +42,8 @@ public class QuoteController {
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{quoteId}")
                 .buildAndExpand(result.getId()).toUri();
-        return ResponseEntity.created(location).body("Quote saved.");
+        //return new ResponseEntity(result, HttpStatus.CREATED);
+        return ResponseEntity.created(location).body(result);
     }
 
     @ApiOperation(value = "Update an existing quotation", response = ResponseEntity.class)
