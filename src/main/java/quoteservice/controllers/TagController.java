@@ -17,6 +17,7 @@ import java.net.URI;
 
 @RestController
 @RequestMapping(value = "/tags")
+@CrossOrigin
 @Api(value="quote service", description = "Operations for storing and updating tags.")
 public class TagController {
 
@@ -46,9 +47,9 @@ public class TagController {
 
     @ApiOperation(value = "Search for a tag (by name)", response = Tag.class)
     @RequestMapping(method = RequestMethod.GET, value = "/search")
-    public Tag searchForTag(@RequestParam(name = "name", required = true) String name){
-        Tag tag = tagService.findTagByName(name);
-        return tag;
+    public Iterable<Tag> searchForTag(@RequestParam(name = "name", required = true) String name){
+        Iterable<Tag> tags = tagService.findTagByName(name);
+        return tags;
     }
 
     @ApiOperation(value = "Save a new tag", response = ResponseEntity.class)
@@ -59,7 +60,7 @@ public class TagController {
             URI location = ServletUriComponentsBuilder
                     .fromCurrentRequest().path("/{quoteId}")
                     .buildAndExpand(result.getId()).toUri();
-            return ResponseEntity.created(location).body("Tag saved.");
+            return ResponseEntity.created(location).body(result);
         }else{
             return ResponseEntity.status(HttpStatus.CONFLICT).body("There was a conflict saving " +
                     "this tag because the name already exists.");
@@ -76,7 +77,7 @@ public class TagController {
         existingTag.setName(input.getName());
         existingTag.setDescription(input.getDescription());
         Tag result = tagService.saveTag(existingTag);
-        return ResponseEntity.ok("Quote updated");
+        return ResponseEntity.ok(result);
     }
 
     @ApiOperation(value = "Partially update an existing tag", response = ResponseEntity.class)
@@ -93,7 +94,7 @@ public class TagController {
             existingTag.setName(input.getName());
         }
         Tag result = tagService.saveTag(existingTag);
-        return ResponseEntity.ok("Tag updated");
+        return ResponseEntity.ok(result);
     }
 
     @ApiOperation(value = "Delete a tag", response = ResponseEntity.class)

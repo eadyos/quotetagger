@@ -8,5 +8,5 @@ import java.util.Optional;
 
 @RepositoryRestResource
 public interface TagRepository extends CrudRepository<Tag, Integer>{
-    Optional<Tag> findByName(String name);
+    Optional<Iterable<Tag>> findByNameStartsWith(String name);
 }

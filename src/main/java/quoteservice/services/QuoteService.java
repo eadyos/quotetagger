@@ -18,4 +18,6 @@ public interface QuoteService {
 
     Quote getRandomQuote();
 
+    Iterable<Quote> findQuoteByAuthor(String author);
+
 }

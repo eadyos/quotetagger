@@ -12,6 +12,6 @@ public interface TagService {
 
     void deleteTag(Integer id);
 
-    Tag findTagByName(String name);
+    Iterable<Tag> findTagByName(String name);
 
 }

@@ -50,9 +50,9 @@ public class TagServiceImpl implements TagService{
     }
 
     @Override
-    public Tag findTagByName(String name) {
+    public Iterable<Tag> findTagByName(String name) {
         logger.debug("findTagByName called");
-        return tagRepository.findByName(name.toLowerCase()).orElse(null);
+        return tagRepository.findByNameStartsWith(name.toLowerCase()).orElse(null);
     }
 
 

@@ -83,4 +83,10 @@ public class QuoteServiceImpl implements QuoteService{
         logger.debug("getRandomQuote invoked");
         return quoteRepository.getRandomQuote();
     }
+
+    @Override
+    public Iterable<Quote> findQuoteByAuthor(String author){
+        logger.debug("findQuoteByAuthor invoked.");
+        return quoteRepository.findByAuthorStartingWith(author).orElse(null);
+    }
 }

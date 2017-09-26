@@ -4,7 +4,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.webmvc.ResourceNotFoundException;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -42,7 +41,6 @@ public class QuoteController {
         URI location = ServletUriComponentsBuilder
                 .fromCurrentRequest().path("/{quoteId}")
                 .buildAndExpand(result.getId()).toUri();
-        //return new ResponseEntity(result, HttpStatus.CREATED);
         return ResponseEntity.created(location).body(result);
     }
 
@@ -55,8 +53,8 @@ public class QuoteController {
         }
         existingQuote.setText(input.getText());
         existingQuote.setAuthor(input.getAuthor());
-        quoteService.saveQuote(existingQuote);
-        return ResponseEntity.ok("Quote updated");
+        Quote updatedQuote = quoteService.saveQuote(existingQuote);
+        return ResponseEntity.ok(updatedQuote);
     }
 
     @ApiOperation(value = "Partially update an existing quotation", response = ResponseEntity.class)
@@ -72,8 +70,8 @@ public class QuoteController {
         if(input.getAuthor() != null){
             existingQuote.setAuthor(input.getAuthor());
         }
-        quoteService.saveQuote(existingQuote);
-        return ResponseEntity.ok("Quote updated");
+        Quote updatedQuote = quoteService.saveQuote(existingQuote);
+        return ResponseEntity.ok(updatedQuote);
     }
 
     @ApiOperation(value = "Delete a quotation", response = ResponseEntity.class)
@@ -135,6 +133,15 @@ public class QuoteController {
         }
         return quote;
     }
+
+    ///Temp
+    @ApiOperation(value = "Search for a quote (by author)", response = Tag.class)
+    @RequestMapping(method = RequestMethod.GET, value = "/search")
+    public Iterable<Quote> searchForQuote(@RequestParam(name = "author", required = true) String author){
+        Iterable<Quote> quotes = quoteService.findQuoteByAuthor(author);
+        return quotes;
+    }
+
 
 
 }

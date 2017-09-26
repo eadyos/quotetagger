@@ -30,12 +30,13 @@ public class BootstrapDataService implements InitializingBean {
     @Autowired
     TagRepository tagRepository;
 
+    Tag testTag;
 
     @Override
     public void afterPropertiesSet() throws Exception {
         logger.info("Bootstrapping data...");
-        createQuotes();
         createTags();
+        createQuotes();
         logger.info("...Bootstrapping data completed");
     }
 
@@ -50,17 +51,23 @@ public class BootstrapDataService implements InitializingBean {
             String[] parts = line.split(";");
             String text = parts[0];
             String author;
-            if(parts.length > 1){
+            if(parts.length == 3){
+                text += parts[1];
+                author = parts[2];
+            }else if(parts.length > 1){
                 author = parts[1];
             }else{
                 author = "unknown";
             }
-            quotes.add(new Quote(text, author));
+            Quote q = new Quote(text, author);
+            q.getTags().add(testTag);
+            quotes.add(q);
         }
         quoteRepository.save(quotes);
     }
 
     private void createTags(){
+        testTag = tagRepository.save(new Tag("test tag", "Tag for testing"));
         tagRepository.save(new Tag("funny", "Funny, humorous, or witty.  Unlike me."));
         tagRepository.save(new Tag("inspirational", "Daily doses of inspiration"));
     }
